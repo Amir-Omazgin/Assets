@@ -1,14 +1,14 @@
 terraform {
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = "3.32.0"
     }
   }
 }
 
 provider "azurerm" {
- features {}
+  features {}
 }
 
 resource "azurerm_resource_group" "example" {
@@ -34,6 +34,6 @@ resource "azurerm_storage_blob" "blob" {
   name                   = "my-awesome-content.zip"
   storage_account_name   = azurerm_storage_account.storage.name
   storage_container_name = azurerm_storage_container.container.name
-  type                   = "block"
+
   # source                 = "some-local-file.zip"
 }
