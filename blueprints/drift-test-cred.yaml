@@ -3,7 +3,7 @@ description: Drift test
 
 inputs:
   host:
-    type: execution-host
+    type: agent
   bucket-region:
     default: eu-west-1
 
