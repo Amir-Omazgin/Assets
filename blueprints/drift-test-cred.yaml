@@ -1,0 +1,50 @@
+spec_version: 2
+description: Drift test
+
+inputs:
+  host:
+    type: agent
+  bucket-region:
+    default: eu-west-1
+
+outputs:
+  bucket:
+    value: '{{ .grains.bucket.outputs.s3_bucket_arn }}'
+    kind: link
+
+#change
+grains:
+  bucket:
+    kind: terraform
+    spec: 
+      source:
+        store: torque-demo
+        path: terraform/s3
+      host:
+        name: '{{ .inputs.host }}'
+      authentication:
+        - Amir-aws-credentials
+      inputs:
+        - region: '{{ .inputs.bucket-region }}'
+        - acl: private
+        - name: 'drift-test-bucket-{{ sandboxid | downcase }}'
+      outputs:
+        - s3_bucket_arn
+        - bucket_to_drift_id
+  
+  tagger:
+    kind: terraform
+    depends-on: bucket
+    spec: 
+      source:
+        store: torque-demo
+        path: terraform/drift-test
+      host:
+        name: '{{ .inputs.host }}'
+      authentication:
+        - Amir-aws-credentials  
+      inputs:
+        - region: '{{ .inputs.bucket-region }}'
+        - bucket-to-drift-id: '{{ .grains.bucket.outputs.bucket_to_drift_id }}'
+      outputs:
+        - s3_bucket_arn
