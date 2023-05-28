@@ -24,10 +24,10 @@ Resources:
     Type: 'AWS::S3::Bucket'
     Properties:
       PublicAccessBlockConfiguration:
-        BlockPublicAcls: false
-        BlockPublicPolicy: false
-        IgnorePublicAcls: false
-        RestrictPublicBuckets: false
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
       OwnershipControls:
         Rules:
           - ObjectOwnership: ObjectWriter
